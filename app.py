@@ -16,15 +16,15 @@ load_dotenv()
 #     'database': os.getenv('DB_DATABASE'),
 #     'port': int(os.getenv('DB_PORT')),
 # }
-connection = psycopg2.connect(os.getenv('DATABASE_URL'))
+# connection = psycopg2.connect(os.getenv('DATABASE_URL'))
 
-# def get_db_connection():
-#     return mysql.connector.connect(**db_config)
+def get_db_connection():
+    return psycopg2.connect(os.getenv('DATABASE_URL'))
 
 @app.route("/")
 def index():
 
-    # connection =get_db_connection()
+    connection =get_db_connection()
     cursor = connection.cursor()
 
     # SQL statement to get all books
@@ -33,21 +33,21 @@ def index():
     '''
 
     cursor.execute(select_query)
-    books = cursor.fetchall()
+    flights = cursor.fetchall()
     connection.close()
 
-    book_dict =[]
-    keys = ["id", "author", "title", "published"]
-    for book_list in books:
-        book_values ={}
-        for idx in range(4):
+    flight_dict =[]
+    keys = ["id", "flight_number", "origin", "destination", "departure_time", "arrival_time"]
+    for flight_list in flights:
+        flight_values ={}
+        for idx in range(6):
             if idx == 3:
-                book_values[keys[idx]] = str(book_list[idx])[0:4]
+                flight_values[keys[idx]] = str(flight_list[idx])[0:4]
             else:
-                book_values[keys[idx]] =  book_list[idx]
-        book_dict.append(book_values)
+                flight_values[keys[idx]] =  flight_list[idx]
+        flight_dict.append(flight_values)
 
-    return render_template("index.html", books = book_dict)
+    return render_template("index.html", books = flight_dict)
 
 @app.route("/create", methods = ["GET", "POST"])
 def create():
