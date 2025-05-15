@@ -1,22 +1,12 @@
 from flask import Flask, render_template, redirect, request
 from dotenv import load_dotenv
 import os
-import mysql.connector
 import re
 import psycopg2
 
 app = Flask(__name__)
 
 load_dotenv()
-
-# db_config = {
-#     'host': os.getenv('DB_HOST'),
-#     'user': os.getenv('DB_USER'),
-#     'password': os.getenv('DB_PASSWORD'),
-#     'database': os.getenv('DB_DATABASE'),
-#     'port': int(os.getenv('DB_PORT')),
-# }
-# connection = psycopg2.connect(os.getenv('DATABASE_URL'))
 
 def get_db_connection():
     return psycopg2.connect(os.getenv('DATABASE_URL'))
@@ -37,14 +27,11 @@ def index():
     connection.close()
 
     flight_dict =[]
-    keys = ["id", "flight_number", "origin", "destination", "departure_time", "arrival_time"]
+    keys = ["id", "flight_number", "origin", "destination"]
     for flight_list in flights:
         flight_values ={}
-        for idx in range(6):
-            if idx == 3:
-                flight_values[keys[idx]] = str(flight_list[idx])[0:4]
-            else:
-                flight_values[keys[idx]] =  flight_list[idx]
+        for idx in range(4):
+            flight_values[keys[idx]] =  flight_list[idx]
         flight_dict.append(flight_values)
 
     return render_template("index.html", books = flight_dict)
@@ -95,13 +82,12 @@ def create():
 def delete():
 
     id = request.args.get("id")
-    print("hello", id)
     connection = get_db_connection()
     cursor = connection.cursor()
 
     # SQL statement to get all books
     delete_query = f'''
-        delete from books 
+        delete from flights 
         where id = '{id}';
     '''
 
@@ -121,16 +107,14 @@ def edit():
 
     # SQL statement to get all books
     select_query = f'''
-        select * from books 
+        select * from flights 
         where id = '{id}';
     '''
     cursor.execute(select_query)
     row = cursor.fetchone()
     connection.close()
 
-    year = str(row[3])[0:4]
     row = list(row)
-    row[3] = year
     return render_template("create.html", row = row)
 
 if __name__ == '__main__':

@@ -11,7 +11,7 @@
 {% block Table %}
     <table>
         <thead>
-            <tr><th>Flight_number</th><th>Origin</th><th>Destination</th><th>Departure_time</th><th>Arrival_time</th></tr>
+            <tr><th>Flight_number</th><th>Origin</th><th>Destination</th></tr>
         </thead>
         <tbody>
             <div class="book-table">
@@ -20,8 +20,6 @@
                         <td>{{ book.flight_number }}</td>
                         <td>{{ book.origin }}</td>
                         <td>{{ book.destination }}</td>
-                        <td>{{ book.departure_time }}</td>
-                        <td>{{ book.arrival_time }}</td>
                         <td><a href="{{ url_for('edit', id= book.id ) }}"><i class="material-icons">edit</i></a></td>
                         
                         <td><a href="{{ url_for('delete', id= book.id ) }}"><i class="material-icons">delete</i></a></td>  

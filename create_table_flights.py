@@ -1,5 +1,8 @@
 import psycopg2
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 DATABASE_URL = os.getenv('DATABASE_URL')
 
@@ -7,15 +10,14 @@ DATABASE_URL = os.getenv('DATABASE_URL')
 conn = psycopg2.connect(DATABASE_URL)
 cur = conn.cursor()
 
+cur.execute("DROP TABLE IF EXISTS flights;")
 # Create table
 cur.execute('''
 CREATE TABLE IF NOT EXISTS flights (
     id SERIAL PRIMARY KEY,
     flight_number TEXT NOT NULL,
     origin TEXT NOT NULL,
-    destination TEXT NOT NULL,
-    departure_time TIMESTAMP NOT NULL,
-    arrival_time TIMESTAMP NOT NULL
+    destination TEXT NOT NULL  
 );
 ''')
 
