@@ -17,7 +17,7 @@ def index():
     connection =get_db_connection()
     cursor = connection.cursor()
 
-    # SQL statement to get all books
+    # SQL statement to get all flights
     select_query = '''
         SELECT * FROM flights;
     '''
@@ -53,7 +53,7 @@ def create():
         connection = get_db_connection()
         cursor = connection.cursor()
 
-        # SQL statement to get all books
+        # SQL statement to update a flight
         identifier = request.form.get('identifier')
         print(identifier)
         if identifier:
@@ -85,7 +85,7 @@ def delete():
     connection = get_db_connection()
     cursor = connection.cursor()
 
-    # SQL statement to get all books
+    # SQL statement to delete a flight
     delete_query = f'''
         delete from flights 
         where id = '{id}';
@@ -105,7 +105,7 @@ def edit():
     connection = get_db_connection()
     cursor = connection.cursor()
 
-    # SQL statement to get all books
+    # SQL statement to get a flight
     select_query = f'''
         select * from flights 
         where id = '{id}';
