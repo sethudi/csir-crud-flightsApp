@@ -52,18 +52,17 @@ def index():
 @app.route("/create", methods = ["GET", "POST"])
 def create():
     if request.method == "POST":
-        title = request.form.get("title")
-        author = request.form.get("author")
-        published = request.form.get("published")
+        flight_number = request.form.get("flight_number")
+        origin = request.form.get("origin")
+        destination = request.form.get("destination")
 
-        result1 = re.match(r"^\S.{0,68}\S$", title)
-        result2 = re.match(r"^\S.{0,48}\S$", author)
-        result3 = re.match(r"^\d{4}$", published)
+        result1 = re.match(r"^\S.{0,68}\S$", flight_number)
+        result2 = re.match(r"^\S.{0,48}\S$", origin)
+        result3 = re.match(r"^\S.{0,48}\S$", destination)
 
         if result1 is None or result2 is None or result3 is None:
             return redirect('/create')
         
-        published += '-01-01';
         connection = get_db_connection()
         cursor = connection.cursor()
 
@@ -72,15 +71,15 @@ def create():
         print(identifier)
         if identifier:
             insert_query = f'''
-                update books set author ='{author}', title ='{title}', published ='{published}'
+                update flights set flight_number ='{flight_number}', origin ='{origin}', destination ='{destination}'
                 where id = {identifier};
 
             '''
         else:
             insert_query = f'''
-                insert into books (author, title, published)
+                insert into flights (flight_number, origin, destination)
                 values
-                ('{author}', '{title}', '{published}');
+                ('{flight_number}', '{origin}', '{destination}');
 
             '''
 
