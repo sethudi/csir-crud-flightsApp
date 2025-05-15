@@ -10,7 +10,6 @@ DATABASE_URL = os.getenv('DATABASE_URL')
 conn = psycopg2.connect(DATABASE_URL)
 cur = conn.cursor()
 
-cur.execute("DROP TABLE IF EXISTS flights;")
 # Create table
 cur.execute('''
 CREATE TABLE IF NOT EXISTS flights (

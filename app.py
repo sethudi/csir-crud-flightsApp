@@ -34,7 +34,7 @@ def index():
             flight_values[keys[idx]] =  flight_list[idx]
         flight_dict.append(flight_values)
 
-    return render_template("index.html", books = flight_dict)
+    return render_template("index.html", flights = flight_dict)
 
 @app.route("/create", methods = ["GET", "POST"])
 def create():

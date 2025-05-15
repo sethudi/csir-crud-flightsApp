@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block style %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='booklist.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='flightlist.css') }}">
     <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -14,15 +14,15 @@
             <tr><th>Flight_number</th><th>Origin</th><th>Destination</th></tr>
         </thead>
         <tbody>
-            <div class="book-table">
-                {% for book in books %}
+            <div class="flight-table">
+                {% for flight in flights %}
                     <tr>
-                        <td>{{ book.flight_number }}</td>
-                        <td>{{ book.origin }}</td>
-                        <td>{{ book.destination }}</td>
-                        <td><a href="{{ url_for('edit', id= book.id ) }}"><i class="material-icons">edit</i></a></td>
+                        <td>{{ flight.flight_number }}</td>
+                        <td>{{ flight.origin }}</td>
+                        <td>{{ flight.destination }}</td>
+                        <td><a href="{{ url_for('edit', id= flight.id ) }}"><i class="material-icons">edit</i></a></td>
                         
-                        <td><a href="{{ url_for('delete', id= book.id ) }}"><i class="material-icons">delete</i></a></td>  
+                        <td><a href="{{ url_for('delete', id= flight.id ) }}"><i class="material-icons">delete</i></a></td>  
                     </tr>
                 {% endfor %}
             </div>
